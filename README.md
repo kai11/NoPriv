@@ -1,3 +1,9 @@
+# Fork changes
+- add proxy support using monkey patch from https://github.com/Anorov/PySocks 
+- add multiple mailboxes support; each will have it's own section in config file
+- store emails in folder from config, not in current directory
+
+
 # NoPriv.py - HTML5 IMAP email backup
 
 NoPriv.py is a python script to backup any IMAP capable email account to a bowsable HTML archive and a Maildir folder. Not one huge file (mbox), only needing a web browser to view and no proprietary code, so you can make sure I won't steal your password. 
