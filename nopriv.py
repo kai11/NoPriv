@@ -35,6 +35,8 @@ import fileinput
 import ConfigParser
 from quopri import decodestring
 import getpass
+import socket
+import socks
 
 # places where the config could be located
 config_file_paths = [ 
@@ -59,7 +61,53 @@ if found == False:
 
 # TODO: proxy
 
+proxy_type_cfg = config.get("general", "proxy_type")
+if proxy_type_cfg == "socks5":
+    proxy_type = socks.SOCKS5
+elif proxy_type_cfg == "socks4": # not tested
+    proxy_type = socks.SOCKS4
+#elif proxy_type_cfg == "http": # not supported by IMAP, I assume?
+#    proxy_type = socks.HTTP
+else:
+    proxy_type = False
+
+if proxy_type:
+    print("Using %s proxy %s:%s" % (proxy_type_cfg,
+        config.get("general", "proxy_server"), config.get("general", "proxy_port")))
+    socks.set_default_proxy(proxy_type,
+        config.get("general", "proxy_server"),
+        int(config.get("general", "proxy_port")),
+        True, # rdns
+        config.get("general", "proxy_user"),
+        config.get("general", "proxy_password"))
+
+    socket.socket = socks.socksocket
+
+
+# global variables
+IMAPFOLDER = False
+IMAPLOGIN = False
+IMAPSERVER = False
+ssl = False
+offline = False
+att_count = False
+last_att_filename = False
+maildir = False
+messages_per_overview_page = False
+lastfolder = False
+
 def processMailbox(config, section):
+    global IMAPFOLDER
+    global IMAPLOGIN
+    global IMAPSERVER
+    global ssl
+    global offline
+    global att_count
+    global last_att_filename
+    global maildir
+    global messages_per_overview_page
+    global lastfolder
+
     # TODO: folder
     IMAPSERVER = config.get(section, 'imap_server')
     IMAPLOGIN = config.get(section, 'imap_user')
