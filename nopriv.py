@@ -38,9 +38,9 @@ import getpass
 
 # places where the config could be located
 config_file_paths = [ 
-    './nopriv.ini',
-    './.nopriv.ini',
     '~/.config/nopriv.ini',
+    './.nopriv.ini',
+    './nopriv.ini',
     '/opt/local/etc/nopriv.ini',
     '/etc/nopriv.ini'
 ]
