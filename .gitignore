@@ -1,0 +1,5 @@
+.nopriv.ini
+*.pyc
+*.swo
+*.swp
+
