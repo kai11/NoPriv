@@ -108,7 +108,15 @@ def processMailbox(config, section):
     global messages_per_overview_page
     global lastfolder
 
-    # TODO: folder
+    print ("Processing mailbox %s" % section)
+    dest = os.path.join(config.get("general", "dest_path"), config.get(section, "dest_folder"))
+    try:
+        os.makedirs(dest)
+    except:
+        pass
+    os.chdir(dest)
+    print ("Writing to %s" % dest)
+
     IMAPSERVER = config.get(section, 'imap_server')
     IMAPLOGIN = config.get(section, 'imap_user')
     IMAPPASSWORD = config.get(section, 'imap_password')
